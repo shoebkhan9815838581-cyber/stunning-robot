@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d1b">
+<title>Mayaira AI</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;padding:18px;min-height:100vh;
+ display:flex;justify-content:center;align-items:center;
+ background:#080d1b;color:white;font-family:Arial;
+}
+.app{
+ width:100%;max-width:430px;padding:24px;
+ text-align:center;background:#111a30;
+ border:1px solid #244b82;border-radius:25px;
+ box-shadow:0 0 35px #087bff33;
+}
+.logo{
+ width:90px;height:90px;margin:auto;
+ display:grid;place-items:center;border-radius:50%;
+ border:3px solid #27aaff;color:#40c8ff;
+ font-size:42px;box-shadow:0 0 25px #168bff;
+}
+h1{color:#45c5ff}
+p{color:#a9bddc}
+input,select{
+ width:100%;padding:14px;margin-top:12px;
+ border-radius:12px;border:1px solid #31547e;
+ background:#091326;color:white;font-size:16px;
+}
+button{
+ width:100%;padding:14px;margin-top:12px;
+ border:0;border-radius:12px;background:#078cff;
+ color:white;font-size:16px;font-weight:bold;
+}
+#answer{
+ margin-top:18px;padding:15px;min-height:75px;
+ background:#091326;border-radius:12px;
+ text-align:left;white-space:pre-wrap;
+}
+</style>
+</head>
+<body>
+<div class="app">
+ <div class="logo">✦</div>
+ <h1>Mayaira AI</h1>
+ <p>Your Personal AI Assistant</p>
+ <p><b>Hello Boss!</b></p>
+
+ <select id="language">
+  <option value="hi-IN">हिंदी</option>
+  <option value="ne-NP">नेपाली</option>
+  <option value="en-US">English</option>
+ </select>
+
+ <select id="voice">
+  <option value="female">Female Voice</option>
+  <option value="male">Male Voice</option>
+ </select>
+
+ <input id="question" placeholder="Ask Mayaira anything...">
+
+ <button onclick="sendMessage()">💬 Send Message</button>
+ <button onclick="listen()">🎤 Voice Input</button>
+ <button onclick="speak()">🔊 Speak</button>
+ <button onclick="searchWeb()">🌐 Search Internet</button>
+
+ <div id="answer">Hello Boss! Mayaira is ready.</div>
+ <p>Mayaira AI • Smart Assistant</p>
+</div>
+
+<script>
+function sendMessage(){
+ const q=document.getElementById("question").value.trim();
+ const lang=document.getElementById("language").value;
+ const a=document.getElementById("answer");
+
+ if(!q){alert("Please type a question");return;}
+
+ if(lang==="hi-IN"){
+  a.innerText="तुमने पूछा: "+q+
+  "\n\nHello Boss! असली AI कनेक्शन अभी जोड़ना बाकी है।";
+ }else if(lang==="ne-NP"){
+  a.innerText="तपाईंले सोध्नुभयो: "+q+
+  "\n\nHello Boss! वास्तविक AI जडान गर्न बाँकी छ।";
+ }else{
+  a.innerText="You asked: "+q+
+  "\n\nHello Boss! Real AI connection is coming soon.";
+ }
+}
+
+function speak(){
+ if(!window.speechSynthesis){
+  alert("Speech not supported");return;
+ }
+ const msg=new SpeechSynthesisUtterance(
+  document.getElementById("answer").innerText
+ );
+ msg.lang=document.getElementById("language").value;
+ speechSynthesis.cancel();
+ speechSynthesis.speak(msg);
+}
+
+function listen(){
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(!SR){alert("Try Chrome browser");return;}
+ const rec=new SR();
+ rec.lang=document.getElementById("language").value;
+ rec.onresult=e=>{
+  document.getElementById("question").value=
+  e.results[0][0].transcript;
+ };
+ rec.start();
+}
+
+function searchWeb(){
+ const q=document.getElementById("question").value.trim();
+ if(!q){alert("Type something first");return;}
+ window.open("https://www.google.com/search?q="+
+ encodeURIComponent(q),"_blank");
+}
+</script>
+</body>
+</html>
