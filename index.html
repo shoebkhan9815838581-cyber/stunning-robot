@@ -1,122 +1,104 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080d1b">
+<meta name="theme-color" content="#10152b">
 <title>Mayaira AI</title>
 
 <style>
 *{box-sizing:border-box}
 body{
  margin:0;
- min-height:100vh;
- background:#080d1b;
- color:white;
  font-family:Arial,sans-serif;
- display:flex;
- justify-content:center;
- padding:15px;
+ background:linear-gradient(135deg,#10152b,#202b50);
+ color:white;
+ min-height:100vh;
+ padding:18px;
 }
-.app{
- width:100%;
- max-width:450px;
- background:#111a30;
- border:1px solid #24518b;
- border-radius:24px;
- padding:20px;
- box-shadow:0 0 30px #078cff33;
+.container{
+ max-width:600px;
+ margin:20px auto;
+ background:#19213d;
+ padding:22px;
+ border-radius:20px;
+ box-shadow:0 8px 30px #0006;
 }
-.logo{
- width:75px;height:75px;
- margin:5px auto;
- display:grid;place-items:center;
- border:2px solid #27baff;
- border-radius:50%;
- color:#40c8ff;
- font-size:38px;
- box-shadow:0 0 25px #168bff;
-}
-h1{text-align:center;color:#45c5ff}
-.sub{text-align:center;color:#a9bddc}
-select,input{
+h1{text-align:center;color:#65e5ff}
+.sub{text-align:center;color:#bbb}
+label{display:block;margin-top:18px;margin-bottom:7px}
+select,input,textarea{
  width:100%;
  padding:14px;
- margin-top:12px;
- border-radius:12px;
- border:1px solid #31547e;
- background:#091326;
- color:white;
+ border:0;
+ border-radius:10px;
  font-size:16px;
+ background:#fff;
+ color:#111;
 }
+textarea{resize:vertical;min-height:90px}
 button{
  width:100%;
  padding:14px;
  margin-top:12px;
  border:0;
- border-radius:12px;
- background:#078cff;
- color:white;
+ border-radius:10px;
+ background:#19b9dc;
+ color:#06121c;
  font-size:16px;
  font-weight:bold;
- cursor:pointer;
 }
 button:active{opacity:.7}
-.secondary{background:#17365b}
 #answer{
- margin-top:18px;
+ margin-top:20px;
  padding:16px;
- min-height:100px;
- background:#091326;
+ background:#10182e;
  border-radius:12px;
+ min-height:100px;
  white-space:pre-wrap;
  line-height:1.6;
  overflow-wrap:anywhere;
 }
-.footer{text-align:center;color:#8ba6ca;font-size:12px}
+.footer{text-align:center;color:#aaa;font-size:12px;margin-top:20px}
 </style>
 </head>
 
 <body>
-<div class="app">
+<div class="container">
 
-<div class="logo">✦</div>
-<h1>Mayaira AI</h1>
-<p class="sub">Your Personal AI Assistant</p>
-<p class="sub"><b>Hello Boss! ❤️</b></p>
+<h1>🤖 Mayaira AI</h1>
+<p class="sub">Your Smart AI Assistant ❤️</p>
 
+<label>🌐 Select Language</label>
 <select id="language">
-<option value="hi-IN">हिंदी</option>
-<option value="ne-NP">नेपाली</option>
+<option value="hi-IN">Hindi</option>
+<option value="ne-NP">Nepali</option>
 <option value="en-US">English</option>
 </select>
 
+<label>🎙️ Select Voice</label>
 <select id="voice">
 <option value="female">Female Voice</option>
 <option value="male">Male Voice</option>
 </select>
 
-<input id="question"
-placeholder="Ask Mayaira anything..."
-autocomplete="off">
+<label>💬 Ask Mayaira AI</label>
+<textarea id="question" placeholder="अपना सवाल यहाँ लिखें..."></textarea>
 
-<button onclick="sendMessage()">💬 Send Message</button>
-<button class="secondary" onclick="listen()">🎤 Voice Input</button>
-<button class="secondary" onclick="speak()">🔊 Speak Answer</button>
-<button class="secondary" onclick="searchWeb()">🌐 Search Internet</button>
+<button onclick="sendMessage()">🚀 Send Message</button>
+<button onclick="listen()">🎤 Speak Question</button>
+<button onclick="speak()">🔊 Speak Answer</button>
 
-<div id="answer">
-Hello Boss! Mayaira AI is ready. ❤️
-</div>
+<div id="answer">नमस्ते! ❤️ मैं Mayaira AI हूँ। मुझसे कुछ भी पूछिए।</div>
 
-<p class="footer">Mayaira AI • Smart Assistant</p>
+<p class="footer">Mayaira AI ❤️ Made with love</p>
 </div>
 
 <script>
 const $ = id => document.getElementById(id);
 
-function sendMessage(){
+async function sendMessage(){
  const q=$("question").value.trim();
  const lang=$("language").value;
 
@@ -125,91 +107,91 @@ function sendMessage(){
   return;
  }
 
- let reply="";
+ let instruction="Reply in English.";
+ if(lang==="hi-IN") instruction="Reply in Hindi.";
+ if(lang==="ne-NP") instruction="Reply in Nepali.";
 
- if(lang==="hi-IN"){
-  reply="आपने पूछा: "+q+
-  "\n\nनमस्ते Boss! ❤️ आपका Mayaira AI तैयार है। असली AI सर्वर कनेक्शन जोड़ना बाकी है।";
- }
- else if(lang==="ne-NP"){
-  reply="तपाईंले सोध्नुभयो: "+q+
-  "\n\nनमस्ते Boss! ❤️ Mayaira AI तयार छ। वास्तविक AI सर्भर जडान गर्न बाँकी छ।";
- }
- else{
-  reply="You asked: "+q+
-  "\n\nHello Boss! ❤️ Mayaira AI is ready. Real AI server connection is still pending.";
- }
+ $("answer").innerText="Mayaira AI is thinking... ❤️";
 
- $("answer").innerText=reply;
+ try{
+  const response=await fetch(
+   "https://script.google.com/macros/s/AKfycbxugy9Ub8cM942-w63Wc-vNzg7qhjtmtBdFxWLqb8FFbGIqzrzYgyi_ifbV-RkUbPUo/exec",
+   {
+    method:"POST",
+    headers:{
+     "Content-Type":"text/plain;charset=utf-8"
+    },
+    body:JSON.stringify({
+     question:instruction+"\n\n"+q
+    })
+   }
+  );
+
+  const data=await response.json();
+
+  if(data.error){
+   throw new Error(data.error);
+  }
+
+  $("answer").innerText=data.answer || "No answer received.";
+
+ }catch(error){
+  $("answer").innerText="Connection error: "+error.message;
+ }
 }
 
 function speak(){
- if(!window.speechSynthesis){
-  alert("Speech is not supported in this browser");
-  return;
- }
-
- const msg=new SpeechSynthesisUtterance(
-  $("answer").innerText
- );
-
- msg.lang=$("language").value;
-
- const voices=window.speechSynthesis.getVoices();
- const lang=msg.lang.split("-")[0];
-
- const matching=voices.filter(v=>
-  v.lang.toLowerCase().startsWith(lang.toLowerCase())
- );
-
- if(matching.length){
-  const selected=$("voice").value;
-  const preferred=matching.find(v=>
-   selected==="female"
-   ? /female|woman|zira|samantha/i.test(v.name)
-   : /male|man|david|daniel/i.test(v.name)
-  );
-  msg.voice=preferred||matching[0];
- }
+ const text=$("answer").innerText;
+ if(!text) return;
 
  speechSynthesis.cancel();
+
+ const msg=new SpeechSynthesisUtterance(text);
+ msg.lang=$("language").value;
+
+ const voices=speechSynthesis.getVoices();
+ const selected=$("voice").value;
+
+ let matching=voices.filter(v=>{
+  return v.lang.toLowerCase().startsWith(
+   msg.lang.substring(0,2).toLowerCase()
+  );
+ });
+
+ if(matching.length){
+  msg.voice=selected==="female"
+   ? matching.find(v=>/female|woman|zira|samantha/i.test(v.name)) || matching[0]
+   : matching.find(v=>/male|man|david|mark/i.test(v.name)) || matching[0];
+ }
+
  speechSynthesis.speak(msg);
 }
 
 function listen(){
- const SR=window.SpeechRecognition||
- window.webkitSpeechRecognition;
+ const SpeechRecognition=
+  window.SpeechRecognition || window.webkitSpeechRecognition;
 
- if(!SR){
-  alert("Please use Google Chrome for voice input");
+ if(!SpeechRecognition){
+  alert("Voice input is not supported in this browser.");
   return;
  }
 
- const rec=new SR();
- rec.lang=$("language").value;
- rec.onresult=e=>{
-  $("question").value=e.results[0][0].transcript;
+ const recognition=new SpeechRecognition();
+ recognition.lang=$("language").value;
+ recognition.interimResults=false;
+
+ recognition.onresult=function(event){
+  $("question").value=event.results[0][0].transcript;
  };
- rec.onerror=()=>{
-  alert("Microphone error. Check permission.");
+
+ recognition.onerror=function(){
+  alert("Microphone error. Please try again.");
  };
- rec.start();
+
+ recognition.start();
 }
 
-function searchWeb(){
- const q=$("question").value.trim();
-
- if(!q){
-  alert("Please type something first");
-  return;
- }
-
- window.open(
-  "https://www.google.com/search?q="+
-  encodeURIComponent(q),
-  "_blank"
- );
-}
+speechSynthesis.onvoiceschanged=function(){};
 </script>
 </body>
 </html>
